@@ -24,11 +24,13 @@ namespace Pedidos_ASP.Service
             {
                 nombre = pedido.nombre,
                 precio = pedido.precio,
-                estado = true,
-
+                estado = pedido.estado,
+                ClienteId = pedido.ClienteId
             };
+
             _context.Pedidos.Add(nuevoPedido);
             await _context.SaveChangesAsync();
+
             return nuevoPedido;
         }
 

@@ -10,5 +10,7 @@ namespace Pedidos_ASP.Data
         }
 
         public DbSet<Pedido> Pedidos { get; set; }
+
+        public DbSet<Cliente> Clientes { get; set; }
     }
 }

@@ -162,3 +162,34 @@ Accept: application/json
 ### PageSize demasiado grande
 GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?page=1&pageSize=999
 Accept: application/json
+
+
+### Crear cliente
+POST {{Pedidos_ASP_HostAddress}}/api/cliente
+Content-Type: application/json
+
+{
+  "nombre": "Macarena",
+  "email": "macarena@test.com"
+}
+
+
+### Ver todos los clientes
+GET {{Pedidos_ASP_HostAddress}}/api/cliente
+Accept: application/json
+
+
+### Ver cliente por ID
+GET {{Pedidos_ASP_HostAddress}}/api/cliente/1
+Accept: application/json
+
+### Crear pedido asociado a cliente 1
+POST {{Pedidos_ASP_HostAddress}}/api/pedido
+Content-Type: application/json
+
+{
+  "nombre": "Pedido de Vanessa",
+  "precio": 200,
+  "estado": false,
+  "clienteId": 1
+}

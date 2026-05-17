@@ -10,5 +10,9 @@
 
 
         public bool estado { get; set; } = false;
+
+        public int ClienteId { get; set; }
+
+        public Cliente Cliente { get; set; } = null!;
     }
 }
