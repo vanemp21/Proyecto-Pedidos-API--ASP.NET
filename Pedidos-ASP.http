@@ -1,0 +1,164 @@
+@Pedidos_ASP_HostAddress = https://localhost:7083
+
+### 1. Crear pedido
+POST {{Pedidos_ASP_HostAddress}}/api/pedido
+Content-Type: application/json
+
+{
+  "nombre": "tres1234567",
+  "precio": 120,
+  "estado": true
+}
+
+
+### 2. Ver todos los pedidos
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/
+Accept: application/json
+
+
+### 3. Buscar pedido por ID
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/3
+Accept: application/json
+
+
+### 4. Actualizar pedido
+PUT {{Pedidos_ASP_HostAddress}}/api/pedido/3
+Content-Type: application/json
+
+{
+  "nombre": "test2",
+  "precio": 10,
+  "estado": false
+}
+
+
+### 6. Buscar precio por ID
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/precio/3
+Accept: application/json
+
+
+### 7. Buscar estado por ID
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/estado/2
+Accept: application/json
+
+
+### 8. Probar ID que no existe
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/999
+Accept: application/json
+
+
+### 9. Probar ID inválido en precio
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/precio/333
+Accept: application/json
+
+
+### 10. Probar ID inválido en estado
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/99990/estado
+Accept: application/json
+
+### Eliminar pedido existente
+DELETE {{Pedidos_ASP_HostAddress}}/api/pedido/3
+Accept: application/json
+
+
+### Eliminar pedido que no existe
+DELETE {{Pedidos_ASP_HostAddress}}/api/pedido/999
+Accept: application/json
+
+### Pedidos caros
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/caros/99
+Accept: application/json
+
+### Pedido por nombre
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/buscar/name/pedido4
+Accept: application/json
+
+### Ordenar por precio
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/ordenados/precio
+Accept: application/json
+
+### Buscar coincidencias
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/buscar/ped
+Accept: application/json
+
+### Contar pedidos
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/total
+Accept: application/json
+
+### Comprobar si existe pedido
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/existe/pedido4
+Accept: application/json
+
+### Página 1: muestra pedidos 1 al 5
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/paginado?page=1&pageSize=5
+Accept: application/json
+
+
+### Página 2: muestra pedidos 6 al 10
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/paginado?page=2&pageSize=5
+Accept: application/json
+
+
+### Página 3: muestra pedidos 11 al 15
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/paginado?page=3&pageSize=5
+Accept: application/json
+
+
+### Página 4: no debería mostrar nada
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/paginado?page=4&pageSize=5
+Accept: application/json
+
+### Paginado
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/paginado?page=1&pageSize=5
+Accept: application/json
+
+### Filtrar por nombre
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?nombre=ped
+Accept: application/json
+
+
+### Filtrar por precio mínimo
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?precioMinimo=100
+Accept: application/json
+
+
+### Filtrar por estado
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?estado=false
+Accept: application/json
+
+
+### Filtrar combinado
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?nombre=ped&precioMinimo=100&estado=true
+Accept: application/json
+
+### Filtrar y ordenar por precio
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?nombre=ped&orden=precio
+Accept: application/json
+
+
+### Filtrar y ordenar por nombre
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?nombre=ped&orden=nombre
+Accept: application/json
+
+### Ordenar por precio menor a mayor
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?orden=precio&direccion=asc
+Accept: application/json
+
+
+### Ordenar por precio mayor a menor
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?orden=precio&direccion=desc
+Accept: application/json
+
+### Filtrar + ordenar + paginar
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?nombre=ped&precioMinimo=100&estado=true&orden=precio&direccion=desc&page=1&pageSize=5
+Accept: application/json
+
+
+### Paginación inválida
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?page=0&pageSize=0
+Accept: application/json
+
+
+### PageSize demasiado grande
+GET {{Pedidos_ASP_HostAddress}}/api/pedido/filtrar?page=1&pageSize=999
+Accept: application/json
