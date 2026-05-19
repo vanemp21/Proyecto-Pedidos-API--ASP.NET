@@ -86,6 +86,14 @@ namespace Pedidos_ASP.Service
                 return false;
             }
 
+            bool clienteExiste = await _context.Clientes
+                .AnyAsync(cliente => cliente.Id == actualizar.ClienteId);
+
+            if (!clienteExiste)
+            {
+                return false;
+            }
+
             pedido.nombre = actualizar.nombre;
             pedido.precio = actualizar.precio;
             pedido.estado = actualizar.estado;

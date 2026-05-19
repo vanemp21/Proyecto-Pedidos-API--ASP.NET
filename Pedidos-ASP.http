@@ -193,3 +193,24 @@ Content-Type: application/json
   "estado": false,
   "clienteId": 1
 }
+### Prueba de pedido asociado a cliente 1
+PUT {{Pedidos_ASP_HostAddress}}/api/pedido/1
+Content-Type: application/json
+
+{
+  "nombre": "Pedido actualizado",
+  "precio": 250,
+  "estado": true,
+  "clienteId": 1
+}
+
+### Prueba de pedido sin cliente
+PUT {{Pedidos_ASP_HostAddress}}/api/pedido/1
+Content-Type: application/json
+
+{
+  "nombre": "Pedido con cliente falso",
+  "precio": 250,
+  "estado": true,
+  "clienteId": 999
+}

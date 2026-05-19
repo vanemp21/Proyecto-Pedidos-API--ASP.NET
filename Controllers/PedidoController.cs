@@ -35,19 +35,18 @@ namespace Pedidos_ASP.Controllers
 
             return Ok(ToResponse(pedido));
         }
-        [HttpPut("{id}")]
-        public async Task<ActionResult<PedidoResponse>> UpdatePedido(int id, UpdatePedido actualizar)
-        {
-            Pedido? pedidoActualizado = await _pedidoService.UpdatePedido(id, actualizar);
 
-            if (pedidoActualizado == null)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdatePedido(int id, UpdatePedido actualizar)
+        {
+            bool actualizado = await _pedidoService.UpdatePedido(id, actualizar);
+
+            if (!actualizado)
             {
                 return NotFound();
             }
 
-            PedidoResponse response = ToResponse(pedidoActualizado);
-
-            return Ok(response);
+            return NoContent();
         }
 
         [HttpPost]

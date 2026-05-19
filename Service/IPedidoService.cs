@@ -7,7 +7,7 @@ namespace Pedidos_ASP.Service
     {
         Task<List<Pedido>> GetAllPedidos();
 
-        Task<Pedido>? GetPedidoById(int id);
+        Task<Pedido?> GetPedidoById(int id);
 
         Task<int> GetPrecioById(int id);
 
@@ -15,7 +15,7 @@ namespace Pedidos_ASP.Service
 
         Task<string> GetEstadoById(int id);
 
-        Task<Pedido?> UpdatePedido(int id, UpdatePedido actualizar);
+        Task<bool> UpdatePedido(int id, UpdatePedido actualizar);
 
         Task<Pedido?> CreatePedido(CreatePedido pedido);
 
