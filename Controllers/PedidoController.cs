@@ -15,9 +15,9 @@ namespace Pedidos_ASP.Controllers
             _pedidoService = pedidoService;
         }
         [HttpGet]
-        public async Task<ActionResult<List<TaskResponse>>> GetAll()
+        public async Task<ActionResult<List<PedidoResponse>>> GetAll()
         {
-            List<TaskResponse> pedidos = (await _pedidoService.GetAllPedidos())
+            List<PedidoResponse> pedidos = (await _pedidoService.GetAllPedidos())
                 .Select(ped => ToResponse(ped))
                 .ToList();
 
@@ -25,7 +25,7 @@ namespace Pedidos_ASP.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaskResponse>> ObtenerPorId(int id)
+        public async Task<ActionResult<PedidoResponse>> ObtenerPorId(int id)
         {
             Pedido? pedido = await _pedidoService.GetPedidoById(id);
             if (pedido == null)
@@ -36,24 +36,31 @@ namespace Pedidos_ASP.Controllers
             return Ok(ToResponse(pedido));
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> ActualizarPedido(int id, UpdatePedido actualizar)
+        public async Task<ActionResult<PedidoResponse>> UpdatePedido(int id, UpdatePedido actualizar)
         {
+            Pedido? pedidoActualizado = await _pedidoService.UpdatePedido(id, actualizar);
 
-            bool realizado = await _pedidoService.UpdatePedido(id, actualizar);
-            if (!realizado)
+            if (pedidoActualizado == null)
             {
                 return NotFound();
             }
-            return NoContent();
 
+            PedidoResponse response = ToResponse(pedidoActualizado);
+
+            return Ok(response);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CrearPedido(CreatePedido pedido)
+        public async Task<ActionResult<PedidoResponse>> CrearPedido(CreatePedido pedido)
         {
-            Pedido nuevoPedido = await _pedidoService.CreatePedido(pedido);
-            return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoPedido.Id }, nuevoPedido);
+            Pedido? nuevoPedido = await _pedidoService.CreatePedido(pedido);
 
+            if (nuevoPedido == null)
+            {
+                return BadRequest("El cliente no existe");
+            }
+
+            return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoPedido.Id }, ToResponse(nuevoPedido));
         }
 
         [HttpGet("buscar/name/{nombre}")]
@@ -102,15 +109,21 @@ namespace Pedidos_ASP.Controllers
         }
 
 
-        public static TaskResponse ToResponse(Pedido pedido)
+        public static PedidoResponse ToResponse(Pedido pedido)
         {
-            return new TaskResponse
+            return new PedidoResponse
             {
                 Id = pedido.Id,
                 nombre = pedido.nombre,
                 precio = pedido.precio,
+                estado = pedido.estado,
+                Cliente = pedido.Cliente == null ? null : new ClienteResponse
+                {
+                    Id = pedido.Cliente.Id,
+                    Nombre = pedido.Cliente.Nombre,
+                    Email = pedido.Cliente.Email
+                }
             };
-
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult<string>> EliminarPedido(int id)
@@ -125,9 +138,9 @@ namespace Pedidos_ASP.Controllers
             return NoContent();
         }
         [HttpGet("caros/{precio}")]
-        public async Task<ActionResult<List<TaskResponse>>> GetPedidosCaros(int precio)
+        public async Task<ActionResult<List<PedidoResponse>>> GetPedidosCaros(int precio)
         {
-            List<TaskResponse> pedidos = (await _pedidoService.GetPedidosCaros(precio))
+            List<PedidoResponse> pedidos = (await _pedidoService.GetPedidosCaros(precio))
                 .Select(ped => ToResponse(ped))
                 .ToList();
 

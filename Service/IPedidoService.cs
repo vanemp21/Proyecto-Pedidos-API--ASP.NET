@@ -15,9 +15,9 @@ namespace Pedidos_ASP.Service
 
         Task<string> GetEstadoById(int id);
 
-        Task<bool> UpdatePedido(int id, UpdatePedido actualizar);
+        Task<Pedido?> UpdatePedido(int id, UpdatePedido actualizar);
 
-        Task<Pedido> CreatePedido(CreatePedido pedido);
+        Task<Pedido?> CreatePedido(CreatePedido pedido);
 
         Task<bool> DeletePedido(int id);
 

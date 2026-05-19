@@ -16,10 +16,20 @@ namespace Pedidos_ASP.Service
 
         public async Task<List<Pedido>> GetAllPedidos()
         {
-         return await _context.Pedidos.ToListAsync();
+            return await _context.Pedidos
+                .Include(pedido => pedido.Cliente)
+                .ToListAsync();
         }
-        public async Task<Pedido> CreatePedido(CreatePedido pedido)
+        public async Task<Pedido?> CreatePedido(CreatePedido pedido)
         {
+            Cliente? cliente = await _context.Clientes
+                .FirstOrDefaultAsync(c => c.Id == pedido.ClienteId);
+
+            if (cliente == null)
+            {
+                return null;
+            }
+
             Pedido nuevoPedido = new()
             {
                 nombre = pedido.nombre,
@@ -48,8 +58,9 @@ namespace Pedidos_ASP.Service
 
         public async Task<Pedido?> GetPedidoById(int id)
         {
-           return await _context.Pedidos.FirstOrDefaultAsync(pedido => pedido.Id == id);
-           
+            return await _context.Pedidos
+                .Include(pedido => pedido.Cliente)
+                .FirstOrDefaultAsync(pedido => pedido.Id == id);
         }
 
         public async Task<int> GetPrecioById(int id)
@@ -67,10 +78,21 @@ namespace Pedidos_ASP.Service
 
         public async Task<bool> UpdatePedido(int id, UpdatePedido actualizar)
         {
-            Pedido? pedido = await _context.Pedidos.FirstOrDefaultAsync(ped => ped.Id == id);
-            pedido?.nombre = actualizar.nombre;
-            pedido?.precio = actualizar.precio;
+            Pedido? pedido = await _context.Pedidos
+                .FirstOrDefaultAsync(ped => ped.Id == id);
+
+            if (pedido == null)
+            {
+                return false;
+            }
+
+            pedido.nombre = actualizar.nombre;
+            pedido.precio = actualizar.precio;
+            pedido.estado = actualizar.estado;
+            pedido.ClienteId = actualizar.ClienteId;
+
             await _context.SaveChangesAsync();
+
             return true;
         }
         public async Task<bool> DeletePedido(int id)
