@@ -103,5 +103,18 @@ namespace Pedidos_ASP.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCliente(int id)
+        {
+            bool eliminado = await _clienteService.DeleteCliente(id);
+
+            if (!eliminado)
+            {
+                return NotFound("No existe ese cliente");
+            }
+
+            return NoContent();
+        }
+
     }
 }

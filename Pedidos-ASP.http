@@ -253,7 +253,7 @@ Content-Type: application/json
 }
 
 ### Prueba todos los pedidos
-GET {{Pedidos_ASP_HostAddress}}/api/cliente/1/pedidos
+GET {{Pedidos_ASP_HostAddress}}/api/cliente/2/pedidos
 
 ### Actualizar cliente
 PUT {{Pedidos_ASP_HostAddress}}/api/cliente/1
@@ -264,3 +264,6 @@ Content-Type: application/json
   "email": "vanessa.actualizada@test.com",
   "telefono": "666111222"
 }
+
+### Eliminar cliente
+DELETE {{Pedidos_ASP_HostAddress}}/api/cliente/2

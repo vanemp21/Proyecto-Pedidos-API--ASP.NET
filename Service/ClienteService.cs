@@ -69,6 +69,21 @@ namespace Pedidos_ASP.Service
             return true;
         }
 
+        public async Task<bool> DeleteCliente(int id)
+        {
+            Cliente? cliente = await _context.Clientes.FindAsync(id);
+
+            if (cliente == null)
+            {
+                return false;
+            }
+
+            _context.Clientes.Remove(cliente);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
     }
 
 
