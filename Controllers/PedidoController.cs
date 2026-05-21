@@ -63,9 +63,11 @@ namespace Pedidos_ASP.Controllers
         }
 
         [HttpGet("buscar/name/{nombre}")]
-        public async Task<ActionResult<List<Pedido>>> GetPedidosNombre(string nombre)
+        public async Task<ActionResult<List<PedidoResponse>>> GetPedidosNombre(string nombre)
         {
-            List<Pedido> pedidos = await _pedidoService.GetPedidoByname(nombre);
+            List<PedidoResponse> pedidos = (await _pedidoService.GetPedidoByname(nombre))
+                .Select(ped => ToResponse(ped))
+                .ToList();
 
             return Ok(pedidos);
         }
@@ -147,17 +149,21 @@ namespace Pedidos_ASP.Controllers
         }
 
         [HttpGet("ordenados/precio")]
-        public async Task<ActionResult<List<Pedido>>> GetPedidosOrdenadosPorPrecio()
+        public async Task<ActionResult<List<PedidoResponse>>> GetPedidosOrdenadosPorPrecio()
         {
-            List<Pedido> pedidos = await _pedidoService.GetPedidosOrdenadosPorPrecio();
+            List<PedidoResponse> pedidos = (await _pedidoService.GetPedidosOrdenadosPorPrecio())
+            .Select(ped => ToResponse(ped))
+            .ToList();
 
             return Ok(pedidos);
         }
 
         [HttpGet("buscar/{nombre}")]
-        public async Task<ActionResult<List<Pedido>>> BuscarPedidos(string nombre)
+        public async Task<ActionResult<List<PedidoResponse>>> BuscarPedidos(string nombre)
         {
-            List<Pedido> pedidos = await _pedidoService.BuscarPedidos(nombre);
+            List<PedidoResponse> pedidos = (await _pedidoService.BuscarPedidos(nombre))
+                .Select(ped => ToResponse(ped))
+                .ToList();
 
             return Ok(pedidos);
         }
@@ -179,29 +185,23 @@ namespace Pedidos_ASP.Controllers
         }
 
         [HttpGet("filtrar")]
-        public async Task<ActionResult<PagedResponse<Pedido>>> FiltrarPedidos([FromQuery] PedidoFilterRequest filtro)
+        public async Task<ActionResult<PagedResponse<PedidoResponse>>> FiltrarPedidos([FromQuery] PedidoFilterRequest filtro)
         {
             PagedResponse<Pedido> resultado = await _pedidoService.FiltrarPedidos(filtro);
 
-            return Ok(resultado);
+            PagedResponse<PedidoResponse> response = new PagedResponse<PedidoResponse>
+            {
+                Page = resultado.Page,
+                PageSize = resultado.PageSize,
+                TotalItems = resultado.TotalItems,
+                TotalPages = resultado.TotalPages,
+                Items = resultado.Items
+                    .Select(ped => ToResponse(ped))
+                    .ToList()
+            };
+
+            return Ok(response);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -10,5 +10,7 @@ namespace Pedidos_ASP.Service
         Task<Cliente?> GetClienteById(int id);
 
         Task<Cliente> CreateCliente(CreateCliente cliente);
+
+        Task<Cliente> ObtenerPedidosCliente(int id);
     }
 }

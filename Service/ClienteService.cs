@@ -39,5 +39,19 @@ namespace Pedidos_ASP.Service
 
             return nuevoCliente;
         }
+
+        public async Task<Cliente?> ObtenerPedidosCliente(int id)
+        {
+            Cliente? cliente = await _context.Clientes
+                .Include(cliente => cliente.Pedidos)
+                .FirstOrDefaultAsync(cliente => cliente.Id == id);
+
+            return cliente;
+        }
+
+
+
     }
+
+
 }

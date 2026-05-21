@@ -53,14 +53,42 @@ namespace Pedidos_ASP.Controllers
             );
         }
 
-        private static ClienteResponse ToResponse(Cliente cliente)
+        
+        [HttpGet("{id:int}/pedidos")]
+        public async Task<ActionResult<ClienteResponse>> ObtenerPedidosDeCliente(int id) {
+
+            Cliente cliente = await _clienteService.ObtenerPedidosCliente(id);
+
+
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            ClienteResponse response = ToResponse(cliente);
+
+            return Ok(response);
+        }
+
+
+        public static ClienteResponse ToResponse(Cliente cliente)
         {
             return new ClienteResponse
             {
                 Id = cliente.Id,
                 Nombre = cliente.Nombre,
-                Email = cliente.Email
+                Email = cliente.Email,
+                Pedidos = cliente.Pedidos
+                    .Select(pedido => new PedidoSimpleResponse
+                    {
+                        Id = pedido.Id,
+                        nombre = pedido.nombre,
+                        precio = pedido.precio,
+                        estado = pedido.estado
+                    })
+                    .ToList()
             };
         }
+
     }
 }

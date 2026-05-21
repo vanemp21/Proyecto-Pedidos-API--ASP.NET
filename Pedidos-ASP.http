@@ -214,3 +214,43 @@ Content-Type: application/json
   "estado": true,
   "clienteId": 999
 }
+
+### Prueba varios pedidos por cliente
+GET {{Pedidos_ASP_HostAddress}}/api/cliente/1/pedidos
+
+
+### Pedido 1
+POST {{Pedidos_ASP_HostAddress}}/api/pedido
+Content-Type: application/json
+
+{
+  "nombre": "Portatil",
+  "precio": 1200,
+  "estado": true,
+  "clienteId": 1
+}
+
+### Pedido 2
+POST {{Pedidos_ASP_HostAddress}}/api/pedido
+Content-Type: application/json
+
+{
+  "nombre": "Monitor",
+  "precio": 300,
+  "estado": false,
+  "clienteId": 1
+}
+
+### Pedido 3
+POST {{Pedidos_ASP_HostAddress}}/api/pedido
+Content-Type: application/json
+
+{
+  "nombre": "Teclado",
+  "precio": 80,
+  "estado": true,
+  "clienteId": 1
+}
+
+### Prueba todos los pedidos
+GET {{Pedidos_ASP_HostAddress}}/api/cliente/1/pedidos
