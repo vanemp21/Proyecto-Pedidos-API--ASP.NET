@@ -32,9 +32,9 @@ namespace Pedidos_ASP.Service
 
             Pedido nuevoPedido = new()
             {
-                nombre = pedido.nombre,
-                precio = pedido.precio,
-                estado = pedido.estado,
+                nombre = pedido.Nombre,
+                precio = pedido.Precio,
+                estado = pedido.Estado,
                 ClienteId = pedido.ClienteId
             };
 
@@ -91,12 +91,12 @@ namespace Pedidos_ASP.Service
 
             if (!clienteExiste)
             {
-                return false;
+                throw new Exception("El cliente no existe");
             }
 
-            pedido.nombre = actualizar.nombre;
-            pedido.precio = actualizar.precio;
-            pedido.estado = actualizar.estado;
+            pedido.nombre = actualizar.Nombre;
+            pedido.precio = actualizar.Precio;
+            pedido.estado = actualizar.Estado;
             pedido.ClienteId = actualizar.ClienteId;
 
             await _context.SaveChangesAsync();
