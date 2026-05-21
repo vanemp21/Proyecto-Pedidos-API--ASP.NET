@@ -10,5 +10,7 @@
 
         // Un cliente tiene muchos pedidos
         public List<Pedido> Pedidos { get; set; } = new();
+
+        public string Telefono { get; set; } = string.Empty;
     }
 }

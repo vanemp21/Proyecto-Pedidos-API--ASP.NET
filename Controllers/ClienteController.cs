@@ -90,5 +90,18 @@ namespace Pedidos_ASP.Controllers
             };
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateCliente(int id, UpdateCliente actualizar)
+        {
+            bool actualizado = await _clienteService.UpdateCliente(id, actualizar);
+
+            if (!actualizado)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
     }
 }

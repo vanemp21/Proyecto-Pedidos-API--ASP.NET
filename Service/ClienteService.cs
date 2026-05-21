@@ -30,7 +30,8 @@ namespace Pedidos_ASP.Service
             Cliente nuevoCliente = new()
             {
                 Nombre = cliente.Nombre,
-                Email = cliente.Email
+                Email = cliente.Email,
+                Telefono = cliente.Telefono,
             };
 
             _context.Clientes.Add(nuevoCliente);
@@ -49,7 +50,24 @@ namespace Pedidos_ASP.Service
             return cliente;
         }
 
+        public async Task<bool> UpdateCliente(int id, UpdateCliente actualizar)
+        {
+            Cliente? cliente = await _context.Clientes
+                .FirstOrDefaultAsync(cliente => cliente.Id == id);
 
+            if (cliente == null)
+            {
+                return false;
+            }
+
+            cliente.Nombre = actualizar.Nombre;
+            cliente.Email = actualizar.Email;
+            cliente.Telefono = actualizar.Telefono;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
 
     }
 

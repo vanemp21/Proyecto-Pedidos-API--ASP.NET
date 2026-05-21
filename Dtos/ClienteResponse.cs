@@ -9,5 +9,7 @@
         public string Email { get; set; } = string.Empty;
 
         public List<PedidoSimpleResponse> Pedidos { get; set; } = new();
+
+        public string Telefono { get; set; } = string.Empty;
     }
 }

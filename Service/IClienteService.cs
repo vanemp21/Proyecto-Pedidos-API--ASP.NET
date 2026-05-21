@@ -12,5 +12,7 @@ namespace Pedidos_ASP.Service
         Task<Cliente> CreateCliente(CreateCliente cliente);
 
         Task<Cliente> ObtenerPedidosCliente(int id);
+
+        Task<bool> UpdateCliente(int id, UpdateCliente actualizar);
     }
 }

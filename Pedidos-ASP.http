@@ -254,3 +254,13 @@ Content-Type: application/json
 
 ### Prueba todos los pedidos
 GET {{Pedidos_ASP_HostAddress}}/api/cliente/1/pedidos
+
+### Actualizar cliente
+PUT {{Pedidos_ASP_HostAddress}}/api/cliente/1
+Content-Type: application/json
+
+{
+  "nombre": "Vanessa Actualizada",
+  "email": "vanessa.actualizada@test.com",
+  "telefono": "666111222"
+}
