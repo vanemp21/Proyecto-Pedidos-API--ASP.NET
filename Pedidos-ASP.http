@@ -267,3 +267,14 @@ Content-Type: application/json
 
 ### Eliminar cliente
 DELETE {{Pedidos_ASP_HostAddress}}/api/cliente/2
+
+### Prueba pedido falso
+POST {{Pedidos_ASP_HostAddress}}/api/pedido
+Content-Type: application/json
+
+{
+  "nombre": "Pedido falso",
+  "precio": 100,
+  "estado": true,
+  "clienteId": 999
+}
