@@ -17,7 +17,7 @@ namespace Pedidos_ASP.Service
 
         Task<bool> UpdatePedido(int id, UpdatePedido actualizar);
 
-        Task<Pedido?> CreatePedido(CreatePedido pedido);
+        Task<PedidoResponse?> CreatePedido(CreatePedido pedido);
 
         Task<bool> DeletePedido(int id);
 

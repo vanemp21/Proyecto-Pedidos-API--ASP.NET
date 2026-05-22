@@ -4,11 +4,11 @@
     {
         public int Id { get; set; }
 
-        public string nombre { get; set; } = string.Empty;
+        public string Nombre { get; set; } = string.Empty;
 
-        public int precio { get; set; }
+        public int Precio { get; set; }
 
-        public bool estado { get; set; }
+        public bool Estado { get; set; }
 
         public ClienteResponse? Cliente { get; set; }
     }

@@ -20,12 +20,12 @@ namespace Pedidos_ASP.Service
                 .Include(pedido => pedido.Cliente)
                 .ToListAsync();
         }
-        public async Task<Pedido?> CreatePedido(CreatePedido pedido)
+        public async Task<PedidoResponse?> CreatePedido(CreatePedido pedido)
         {
-            Cliente? cliente = await _context.Clientes
-                .FirstOrDefaultAsync(c => c.Id == pedido.ClienteId);
+            bool clienteExiste = await _context.Clientes
+                .AnyAsync(c => c.Id == pedido.ClienteId);
 
-            if (cliente == null)
+            if (!clienteExiste)
             {
                 return null;
             }
@@ -41,7 +41,14 @@ namespace Pedidos_ASP.Service
             _context.Pedidos.Add(nuevoPedido);
             await _context.SaveChangesAsync();
 
-            return nuevoPedido;
+            return new PedidoResponse
+            {
+                Id = nuevoPedido.Id,
+                Nombre = nuevoPedido.nombre,
+                Precio = nuevoPedido.precio,
+                Estado = nuevoPedido.estado,
+                Cliente = null
+            };
         }
 
 
