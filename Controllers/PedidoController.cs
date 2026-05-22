@@ -52,14 +52,14 @@ namespace Pedidos_ASP.Controllers
         [HttpPost]
         public async Task<ActionResult<PedidoResponse>> CrearPedido(CreatePedido pedido)
         {
-            Pedido? nuevoPedido = await _pedidoService.CreatePedido(pedido);
+            PedidoResponse? nuevoPedido = await _pedidoService.CreatePedido(pedido);
 
             if (nuevoPedido == null)
             {
                 return BadRequest("El cliente no existe");
             }
 
-            return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoPedido.Id }, ToResponse(nuevoPedido));
+            return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoPedido.Id }, nuevoPedido);
         }
 
         [HttpGet("buscar/name/{nombre}")]
@@ -115,9 +115,9 @@ namespace Pedidos_ASP.Controllers
             return new PedidoResponse
             {
                 Id = pedido.Id,
-                nombre = pedido.nombre,
-                precio = pedido.precio,
-                estado = pedido.estado,
+                Nombre = pedido.nombre,
+                Precio = pedido.precio,
+                Estado = pedido.estado,
                 Cliente = pedido.Cliente == null ? null : new ClienteResponse
                 {
                     Id = pedido.Cliente.Id,
